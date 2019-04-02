@@ -1,0 +1,21 @@
+#!/bin/sh
+
+udevd &
+udevadm trigger
+
+fbcp &
+
+# make WPE_URL tokenized using :
+
+IFS=,
+urls=(${WPE_URL})
+
+for key in "${!urls[@]}"
+do
+  echo ${urls[$key]}
+done
+exit
+
+WPE_BCMRPI_TOUCH=1 WPELauncher $WPE_URL &
+
+./tohora 80 WPELauncher
